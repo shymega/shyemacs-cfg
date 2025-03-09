@@ -1,0 +1,78 @@
+{
+  "nodes": {
+    "copilot": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1740274761,
+        "narHash": "sha256-ATIyNAnd1pU82xdGH7+z9zkOcDVJhYhh65QDQ73NiL0=",
+        "owner": "copilot-emacs",
+        "repo": "copilot.el",
+        "rev": "7d105d708a23d16cdfd5240500be8bb02f95a46e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "copilot-emacs",
+        "repo": "copilot.el",
+        "type": "github"
+      }
+    },
+    "dash": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1715347628,
+        "narHash": "sha256-at42NCcdF9g7a55asnOCSqsvG+XhWuvVsHFT6kU9f9o=",
+        "owner": "magnars",
+        "repo": "dash.el",
+        "rev": "1de9dcb83eacfb162b6d9a118a4770b1281bcd84",
+        "type": "github"
+      },
+      "original": {
+        "owner": "magnars",
+        "repo": "dash.el",
+        "type": "github"
+      }
+    },
+    "f": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1727955076,
+        "narHash": "sha256-rDUl2oUlcnSjNbFZn9A/80RVk6neaTScw2kvh6FjmTE=",
+        "owner": "rejeep",
+        "repo": "f.el",
+        "rev": "931b6d0667fe03e7bf1c6c282d6d8d7006143c52",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rejeep",
+        "repo": "f.el",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "copilot": "copilot",
+        "dash": "dash",
+        "f": "f",
+        "s": "s"
+      }
+    },
+    "s": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1681482914,
+        "narHash": "sha256-fbF/SyPwEiJICaPBq0xWj2yLWjdNwkaLF2iYvZ2EO1k=",
+        "owner": "magnars",
+        "repo": "s.el",
+        "rev": "dda84d38fffdaf0c9b12837b504b402af910d01d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "magnars",
+        "repo": "s.el",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
