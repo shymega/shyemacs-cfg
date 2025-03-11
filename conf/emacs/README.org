@@ -1,0 +1,97 @@
+#+title: Emacs Configuration
+#+property: header-args:emacs-lisp :tangle yes
+#+author: Dom Rodriguez (shymega)
+#+startup: overview
+
+* About
+
+This is my Emacs configuration.
+
+** Startup
+#+begin_src emacs-lisp :early:
+  (advice-add 'use-package-ensure-elpa :override (lambda (&rest _) nil))
+  (setq package-enable-at-startup nil)
+  (setq package-quickstart nil)
+#+end_src
+
+#+begin_src emacs-lisp
+  ;; Disable package.el entirely since I am using twist.
+  (setq inhibit-startup-echo-area-message t)
+  (setq inhibit-startup-screen t)
+  (setq initial-scratch-message nil)
+  (setq frame-inhibit-implied-resize t)
+
+  (setq auto-window-vscroll nil)
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(vertical-scroll-bars) default-frame-alist)
+  (setq frame-inhibit-implied-resize t)
+  (setq inhibit-x-resources t)
+
+  (add-hook 'emacs-startup-hook
+            `(lambda ()
+               (setq file-name-handler-alist ',file-name-handler-alist))
+            99)
+  (setq file-name-handler-alist nil)
+#+end_src
+
+Time the startup and display the startup time after completed.
+#+begin_src emacs-lisp
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (message "Loaded Emacs in %.03fs"
+                       (float-time (time-subtract after-init-time before-init-time)))))
+#+end_src
+
+Temporarily reduce garbage collection to gain some performance boost during startup.
+#+begin_src emacs-lisp
+  (let ((normal-gc-cons-threshold gc-cons-threshold)
+        (normal-gc-cons-percentage gc-cons-percentage)
+        (normal-file-name-handler-alist file-name-handler-alist)
+        (init-gc-cons-threshold most-positive-fixnum)
+        (init-gc-cons-percentage 0.6))
+    (setq gc-cons-threshold init-gc-cons-threshold
+          gc-cons-percentage init-gc-cons-percentage
+          file-name-handler-alist nil)
+    (add-hook 'after-init-hook
+              `(lambda ()
+                 (setq gc-cons-threshold ,normal-gc-cons-threshold
+                       gc-cons-percentage ,normal-gc-cons-percentage
+                       file-name-handler-alist ',normal-file-name-handler-alist))))
+#+end_src
+
+Inhibit startup screen and messages. If you are new to Emacs it is recommended to not
+disable the startup screen as it has great content to get you going.
+#+begin_src emacs-lisp
+  (setq inhibit-startup-echo-area-message t)
+  (setq inhibit-startup-screen t)
+  (setq initial-scratch-message nil)
+#+end_src
+
+Setup post-init hook for finalisation.
+
+#+begin_src emacs-lisp
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq debug-on-error nil)
+  	    (setq initial-scratch-message (format ";; Scratch buffer - started on %s\n\n" (current-time-string)))
+              (message ";; Loaded Emacs in %.03fs"
+                       (float-time (time-subtract after-init-time before-init-time)))))
+#+end_src
+
+*** UI
+Don't implicitly resize frames when changing various settings.
+#+begin_src emacs-lisp
+  (setq frame-inhibit-implied-resize t)
+#+end_src
+
+Ignore X resources.
+#+begin_src emacs-lisp
+  (advice-add #'x-apply-session-resources :override #'ignore)
+  (use-package copilot
+    :ensure t
+    :vc (:url "https://github.com/copilot-emacs/copilot.el"
+              :rev :newest
+              :branch "main"))
+#+end_src
+
